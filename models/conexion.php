@@ -14,15 +14,6 @@ function conexionDB()
                 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-        //         $consult = "CREATE TABLE IF NOT EXISTS users_admins(
-        //     ci int,
-        //     nombre_completo  varchar(70),
-        //     correo varchar(40),
-        //     contrasena varchar(50),
-        //     PRIMARY KEY(ci)
-        //     );";
-
-                // $db->exec($consult);
 
                 return $db;
         } catch (PDOException $e) {
