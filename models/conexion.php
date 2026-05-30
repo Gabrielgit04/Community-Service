@@ -1,22 +1,17 @@
 <?php
-
-// $db_name = 'servicio.db';
-
-define('DB_NAME', 'servicio.db');
-
+require_once __DIR__ . '/../config.php';
 
 function conexionDB()
 {
 
-        try {
+        try{
                 $db = new PDO("sqlite:" . __DIR__ . "/" . DB_NAME);
                 // Set error mode to exceptions
                 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-
-
                 return $db;
-        } catch (PDOException $e) {
+        } 
+        catch (PDOException $e) {
                 echo "Error de conexion: " . $e->getMessage();
                 exit();
         }
