@@ -1,10 +1,18 @@
-<?php require_once dirname(__DIR__, 3) . '/servicio-comunitario/config.php'; ?>
+<?php
+$__root = dirname(__DIR__);
+while (!is_file($__root . '/config.php')) { $__root = dirname($__root); }
+require_once $__root . '/config.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <base href="<?php echo base_url('/'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/style-recover.css">
+    <link rel="stylesheet" href="views/assets/css/base.css">
+    <link rel="stylesheet" href="views/assets/css/style-recover.css">
+    <script src="views/assets/public/toasts.js"></script>
+    <script src="views/assets/public/transition.js"></script>
     <title>Preguntas de seguridad</title>
 </head>
 <body>
@@ -12,7 +20,7 @@
 
 
         
-        <form action="<?php echo BASE_URL . "controller/authAdmin/validateSession.php" ?>" method="post" autocomplete="off" class="recover-form">
+        <form action="<?php echo base_url('/controller/authAdmin/validateSession.php') ?>" method="post" autocomplete="off" class="recover-form">
             <header class="header-box"><h2>Protege tu cuenta</h2></header>
 
             <select id="security-question" name="security-question" required>
@@ -28,7 +36,7 @@
 
             <div class="input_area">
                 <input type="text" name="quest1" id="user" class="entry" placeholder="Respuesta" minlength="3" maxlength="30"  title="Se permiten letras, numeros y guines bajos, y la longitud debe ser de 3 a 30 caracteres" required>
-                <div class="labelline"><span><img src="../assets/imgs/icons/clipboard.svg" alt="icon"
+                <div class="labelline"><span><img src="views/assets/imgs/icons/misc/clipboard.svg" alt="icon"
                             class="icon_user"></span></div>
             </div>
 
@@ -45,7 +53,7 @@
 
             <div class="input_area">
                 <input type="text" name="quest2" id="user" class="entry" placeholder="Respuesta" minlength="3" maxlength="30"  title="Se permiten letras, numeros y guines bajos, y la longitud debe ser de 3 a 30 caracteres" required>
-                <div class="labelline"><span><img src="../assets/imgs/icons/clipboard.svg" alt="icon"
+                <div class="labelline"><span><img src="views/assets/imgs/icons/misc/clipboard.svg" alt="icon"
                             class="icon_user"></span></div>
             </div>
 

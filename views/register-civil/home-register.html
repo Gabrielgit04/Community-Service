@@ -1,69 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
+    <base href="../../">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/register-civil-style.css">
-    <title>Escoge una seccion</title>
+    <link rel="stylesheet" href="views/assets/css/base.css">
+    <link rel="stylesheet" href="views/assets/css/register-civil-style.css">
+    <script src="views/assets/public/transition.js"></script>
+    <title>Escoge una sección</title>
 </head>
 <body>
-                <a href="../main-menu/index.php"><img src="../assets/imgs/icons/arrow-left.svg" alt="exit" class="exit-home-register"></a>
+    <a href="views/main-menu/index.php"><img src="views/assets/imgs/icons/nav/arrow-left.svg" alt="exit" class="exit-home-register"></a>
+
+    <header class="civil-head">
+        <h1>Registro Civil</h1>
+        <p>Gestiona los miembros de tu consejo comunal</p>
+    </header>
 
     <main class="main-box">
-        
+
         <div class="redirect-box-register">
-        <a href="../register-civil/form-register/index.php">
-        <section class="registered-box">
-            <h1>Registro Civil</h1>
-            <figure class="lottie-ani">
-                <img src="../assets/imgs/register.webp">
-            </figure>
-            <p>Registra las personas pertenecientes a tu consejo comunal</p>
-        </section></a>
+            <a href="views/register-civil/form-register/index.php">
+                <section class="registered-box">
+                    <h1>Registro Civil</h1>
+                    <figure class="lottie-ani">
+                        <img src="views/assets/imgs/register.webp">
+                    </figure>
+                    <p>Registra las personas pertenecientes a tu consejo comunal</p>
+                    <span class="card-cta">Registrar →</span>
+                </section>
+            </a>
         </div>
         <div class="redirect-box-read">
-        <a href="../register-civil/read/index.php">
-        <section class="read-box">
-            <h1>Visualizar tabla</h1>
-            <figure class="lottie-read">
-                <img src="../assets/imgs/reer.webp">
-            </figure>
-            <p>Visualiza, edita y elimina las personas pertenecientes a tu consejo comunal</p>
-
-        </section></a>
+            <a href="views/register-civil/read/index.php">
+                <section class="read-box">
+                    <h1>Visualizar tabla</h1>
+                    <figure class="lottie-read">
+                        <img src="views/assets/imgs/reer.webp">
+                    </figure>
+                    <p>Visualiza, edita y elimina las personas pertenecientes a tu consejo comunal</p>
+                    <span class="card-cta outline">Ver registros →</span>
+                </section>
+            </a>
         </div>
-        
+
     </main>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.4/lottie.min.js"></script>
-
-   <script>
-  // Detecta clic en enlaces
-    document.querySelectorAll('.exit-home-register').forEach(link => {
-    link.addEventListener('click', e => {
-    e.preventDefault();
-    document.body.classList.add('fade-out');
-    setTimeout(() => {
-        window.location.href = '../main-menu/index.php' ;
-      }, 500); // tiempo igual al de la animación
-    });
-});
-    </script>
-    <!-- <script>
-        const animation = lottie.loadAnimation({
-            container: document.querySelector('.lottie-read'),
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            path:'../assets/public/Administrao.json'});
-
-            const animationRead = lottie.loadAnimation({
-            container: document.querySelector('.lottie-ani'),
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            path:'../assets/public/register.json'});
-
-    </script> -->
 
 </body>
 </html>

@@ -1,38 +1,41 @@
 <?php
 session_start();
-include '../../models/conexion.php';
+require_once dirname(__DIR__, 2) . '/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../../views/change-password/index.php');
+    redirect('/views/change-password/index.php');
     exit();
 }
 
 $newPassword = isset($_POST['new_password']) ? trim($_POST['new_password']) : '';
 $repeatPassword = isset($_POST['rep_password']) ? trim($_POST['rep_password']) : '';
 
-if ($newPassword === '' || $repeatPassword === '') {
-    $_SESSION['errors'] = ['Complete ambos campos de contraseña.'];
-    header('Location: ../../views/change-password/index.php');
-    exit();
+$errors = [];
+if ($newPassword === '') {
+    $errors['new_password'] = 'Ingrese la nueva contraseña.';
+}
+if ($repeatPassword === '') {
+    $errors['rep_password'] = 'Repita la nueva contraseña.';
 }
 
 if ($newPassword !== $repeatPassword) {
-    $_SESSION['errors'] = ['Las contraseñas no coinciden.'];
-    header('Location: ../../views/change-password/index.php');
-    exit();
+    $errors['rep_password'] = 'Las contraseñas no coinciden.';
 }
 
-// contraseña mínima segura
 if (strlen($newPassword) < 8) {
-    $_SESSION['errors'] = ['La contraseña debe tener al menos 8 caracteres.'];
-    header('Location: ../../views/change-password/index.php');
+    $errors['new_password'] = 'La contraseña debe tener al menos 8 caracteres.';
+}
+
+if (!empty($errors)) {
+    $_SESSION['errors'] = $errors;
+    redirect('/views/change-password/index.php');
     exit();
 }
 
 $userID = isset($_SESSION['id_user']) ? $_SESSION['id_user'] : null;
 if (!$userID) {
-    $_SESSION['errors'] = ['Usuario no identificado. Inicie el proceso de recuperación otra vez.'];
-    header('Location: ../../views/auth-identification/index.php');
+    $_SESSION['error'] = 'Usuario no identificado. Inicie el proceso de recuperación otra vez.';
+    redirect('/views/auth-identification/index.php');
     exit();
 }
 
@@ -51,12 +54,12 @@ try {
     unset($_SESSION['id_user']);
     $_SESSION['mensaje'] = 'Contraseña actualizada con éxito.';
 
-    header('Location: ../../views/change-password/successfull.php');
+    redirect('/views/change-password/successfull.php');
     exit();
 } catch (PDOException $e) {
     error_log('NewPassword error: ' . $e->getMessage());
-    $_SESSION['errors'] = ['No se pudo actualizar la contraseña. Intente más tarde.'];
-    header('Location: ../../views/change-password/index.php');
+    $_SESSION['error'] = 'No se pudo actualizar la contraseña. Intente más tarde.';
+    redirect('/views/change-password/index.php');
     exit();
 }
 

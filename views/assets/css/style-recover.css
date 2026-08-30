@@ -1,302 +1,174 @@
-*{
-    box-sizing: border-box;
-}
-body{
-    margin: 0;
-    background-color: rgba(2, 20, 155);
-    font-family: 'Poppins',Arial, Helvetica, sans-serif;
-}
-.exit{
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    width: 30px;
-    cursor: pointer;
-    background-color: whitesmoke;
-    padding: 5px;
-    border-radius:50% ;
-}
-/* preguntas de seguridad */
-#small-error{
-        color: red;
-        font-family: 'Poppins', Arial, Helvetica, sans-serif;
-        padding: 5px;
-        font-size: 12px;
-        margin: 0 20px;
-    }
+/* ============================================================
+   Recuperación de cuenta, preguntas de seguridad, cambio de clave
+   ============================================================ */
 
-.question-box,.question-box-id{
-    width: 100%;
-    height:100dvh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-.question-box form{
-    width: 450px;
-    min-height: fit-content;
-    background-color: whitesmoke;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    /* row-gap:3px; */
-    position: absolute;
-    padding: 20px 10px;
-    row-gap: 15px;
-}
-.ced-form{
-    width: 450px;
-    height:320px;
-    padding: 10px;
-    background-color: whitesmoke;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    /* row-gap:3px; */
-    position: absolute;
-    padding: 0 10px;
-    min-height: fit-content;
-
-}
-.ced-form p{
-    text-indent: 30px;
-    color:rgba(11, 18, 147, 0.874) ;
+body {
+  margin: 0;
+  background: var(--bg);
 }
 
-.entry,.entry_pass{
-    position: absolute;
-    width: 90%;
-    line-height: 28px;
-    outline: none;
-    border-radius: 10px;
-    border: solid #DDDDDD;
-    background-color: #DDDDDD;
-    text-indent: 35px;
-    transition: al ease .2s;
-    left: 23px;
-    /* box-shadow: 0 0 6px darkslategray; */
+.exit {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+  background: var(--surface);
+  padding: 8px;
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+  transition: transform .15s, box-shadow .15s;
+  z-index: 10;
 }
-.entry:focus::placeholder,.entry_pass:focus::placeholder{
-    opacity: 0;
-}
-.entry::placeholder,.entry_pass::placeholder{
-    font-weight: bold;
-}
-.labelline{
-    position: absolute;
-    z-index: 1111;
-    font-size: 13;
-    font-weight: bold;
-    padding: 0.5;
-    margin: 0 23px;
-}
+.exit:hover { transform: scale(1.08); box-shadow: var(--shadow); }
 
-.icon_lock,.icon_user,.icon_email,.icon_id{
-    margin-top: 6px;
-
-}
-.input_area,.input_password{
-    position: relative;
-    height:50px;
-    line-height: 50px;
-    margin: 20px 0 0px 0;
-    padding: 8px;
-}
-.question-box form select{
-    margin-top: 10px;
-    width: 90%;
-    transform: translateX(23px);
-    height: 30px;
-    border-radius: 6px;
-    background-color: #DDDDDD;
-    font-weight: 600;
-    color: rgb(63, 63, 63);
+/* Contenedor común centrado */
+.question-box, .question-box-id {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 40px 16px;
 }
 
-.btn-secure{
-    height: 35px;
-    width: 90%;
-    text-transform: uppercase;
-    transform: translateX(23px);
-    font-family: 'Poppins',Arial, Helvetica, sans-serif;
-    margin-top:20px;
-    border-radius: 7px;
-    border: 1px solid  rgba(8, 24, 146, 0.807);
-    background-color:  rgba(8, 24, 146, 0.807);
-    color: whitesmoke;
-    font-weight: 600;
-    letter-spacing: 2px;
-    cursor: pointer;
-}
-.btn-secure:hover{
-    background-color: rgb(5, 28, 201);
-    border: 1px solid  rgb(3, 24, 187);
-    transition: all ease .5s;
+.question-box form, .ced-form, .recover-form {
+  width: 100%;
+  max-width: 460px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: relative;
 }
 
-.header-box{
-    text-align: center;
-    margin-top: 10px;
-    font-size: 16px;
-    text-transform: uppercase;
-    color: rgba(16, 11, 125, 0.874);
+.ced-form p, .text {
+  margin: 0;
+  color: var(--text-muted);
+  font-family: var(--font-light);
+  font-size: 15px;
 }
 
-/* cambio de contrasena */
+.text { padding: 4px 0; color: var(--navy-800); font-weight: 600; }
 
-.form-change{
-    font-size: 14px;
-    text-align: center;
-    width: 370px;
-    height: 390px;
-    row-gap: 10px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    background-color: whitesmoke;
-    border-radius: 20px;
-    height: fit-content;
-    padding: 20px 10px;
-}
-.form-change h1{
-    font-size: 22px;
-    text-transform: uppercase;
-    color: rgba(191, 9, 9, 0.874);
-    margin-top: 30px;
+.header-box {
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--navy-800);
+  margin: 0;
 }
 
-.main-box-change{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 70px;
-    column-gap: 10px;
-}
-.icon_lock_new,.icon_lock_rep{
-    width: 25px;
-}
+.header-box h2 { font-size: 1.3rem; }
 
-.send-new{
-    height: 35px;
-    width: 90%;
-    text-transform: uppercase;
-    transform: translateX(23px);
-    font-family: 'Poppins',Arial, Helvetica, sans-serif;
-    margin-top:10px;
-    border-radius: 7px;
-    border: 1px solid  rgba(8, 24, 146, 0.807);
-    background-color:  rgba(8, 24, 146, 0.807);
-    color: whitesmoke;
-    font-weight: 600;
-    letter-spacing: 2px;
-    cursor: pointer;
+.input_area { position: relative; width: 100%; margin: 6px 0; }
+
+.entry, .entry_pass {
+  width: 100%;
+  padding: 12px 14px 12px 44px;
+  font-family: var(--font-light);
+  font-size: 14px;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color .15s, box-shadow .15s, background .15s;
+}
+.entry::placeholder, .entry_pass::placeholder { color: var(--text-soft); font-weight: 400; }
+.entry:focus, .entry_pass:focus {
+  border-color: var(--primary);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(26, 53, 119, .12);
 }
 
-/* recover password */
-.text{
-    font-family: "Poppins-light",Arial, Helvetica, sans-serif;
-    text-indent: 20px;
-    font-size: 16px;
-    color: rgba(29, 29, 35, 0.874);
-    margin-block: 0;
+.labelline {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: flex;
 }
-#messageErrores{
-    background-color: rgb(117, 7, 7);
-    color: whitesmoke;
-    display: flex;
-    padding:10px 5px 10px 0;
-    width: fit-content;
-    margin-bottom: 20px;
-    min-width: fit-content;
-    box-shadow: 0 0 8px whitesmoke;
-    align-items: center;
-    border-radius: 20px;
-    justify-content: center;
-    height: fit-content;
-    animation: up 1.5s linear;
-}
+.labelline img { width: 20px; height: 20px; filter: brightness(0) saturate(100%) invert(34%) sepia(12%) saturate(1200%) hue-rotate(200deg) brightness(92%); }
 
-#messageErrores p{
-    font-family: 'Poppins-light',Arial, Helvetica, sans-serif;
-    font-weight: 600;
-    text-transform: uppercase;
+.question-box form select {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: var(--font-light);
+  font-size: 14px;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  outline: none;
+}
+.question-box form select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(26, 53, 119, .12);
 }
 
-.btn-recover{
-    height: 35px;
-    width: 90%;
-    text-transform: uppercase;
-    transform: translateX(23px);
-    font-family: 'Poppins',Arial, Helvetica, sans-serif;
-    margin-top:50px;
-    border-radius: 7px;
-    border: 1px solid  rgba(8, 24, 146, 0.807);
-    background-color:  rgba(8, 24, 146, 0.807);
-    color: whitesmoke;
-    font-weight: 600;
-    letter-spacing: 2px;
-    cursor: pointer;
-
+.btn-secure, .btn-recover, .send-new {
+  width: 100%;
+  padding: 13px 16px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--primary);
+  color: #fff;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: background .15s, box-shadow .15s, transform .08s;
+  margin-top: 8px;
 }
-.recover-form{
-    width: 450px;
-    height: 460px;
-    background-color: whitesmoke;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    row-gap:8px;
-    position: absolute;
-    padding: 0 10px;
-
-    
+.btn-secure:hover, .btn-recover:hover, .send-new:hover {
+  background: var(--primary-hover);
+  box-shadow: var(--shadow);
 }
+.btn-secure:active, .btn-recover:active, .send-new:active { transform: scale(.995); }
 
-
-/* responsive design */
-@media( width < 450px) and (height > 600px){
-
-    body{
-        padding: 20px;
-    }
-    .question-box form{
-        width: 100%;
-        height: 480px;
-    }
-
-    .header-box{
-        font-size: 14px;
-    }
-
-    .btn-secure{
-        margin-top: 60px;
-        transform: translateX(18px);
-    }
-    .entry,.entry_pass{
-        left: 18px;
+/* Cambio de contraseña */
+.main-box-change {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 16px;
+  background: var(--bg);
 }
 
-.question-box form select{
-    transform: translateX(18px);
+.form-change {
+  width: 100%;
+  max-width: 400px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: 34px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-
-
+.form-change h1 {
+  font-size: 1.35rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--navy-800);
+  text-align: center;
+  margin: 0;
 }
 
-
-
-
-
-@font-face {
-    font-family: 'Poppins';
-    src: url(../fonts/Poppins-Black.ttf) format('truetype');
+@media (max-width: 460px) {
+  .exit { left: 12px; top: 12px; }
 }
-@font-face {
-    font-family: 'Poppins-light';
-    src: url(../fonts/Poppins-Light.ttf) format('truetype');
-}
-
