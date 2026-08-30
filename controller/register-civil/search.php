@@ -1,5 +1,5 @@
 <?php
-include '../../models/conexion.php';
+require_once dirname(__DIR__, 2) . '/config.php';
 
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
@@ -20,7 +20,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
         session_start();
         $_SESSION['search']= $fetch;
-        header('Location:../../views/register-civil/read/index.php');
+        redirect('/views/register-civil/read/index.php');
 
 }
 

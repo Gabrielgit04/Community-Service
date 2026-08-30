@@ -1,96 +1,98 @@
-<?php require_once dirname(__DIR__, 3) . '/servicio-comunitario/config.php'; ?>
+<?php
+$__root = dirname(__DIR__);
+while (!is_file($__root . '/config.php')) { $__root = dirname($__root); }
+require_once $__root . '/config.php';
+?>
 <?php
 session_start();
-$mensaje = '';
+$fieldErrors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
+unset($_SESSION['errors']);
+$toastError = isset($_SESSION['error']) ? $_SESSION['error'] : '';
+unset($_SESSION['error']);
 
+$logged = false;
 if (isset($_SESSION['Logueado']) && $_SESSION['Logueado'] == true) {
-    $mensaje = 'Has iniciado sesion correctamente';
+    $logged = true;
     unset($_SESSION['Logueado']);
 }
 ?>
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
+    <base href="<?php echo base_url('/'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/styles.css">
-    <link rel="icon" type="image/x-icon" href="../assets/imgs/logo-unidos.ico">
+    <link rel="stylesheet" href="views/assets/css/base.css">
+    <link rel="stylesheet" href="views/assets/css/styles.css">
+    <link rel="icon" type="image/x-icon" href="views/assets/imgs/logo-unidos.ico">
+    <script src="views/assets/public/toasts.js"></script>
+    <script src="views/assets/public/field-errors.js"></script>
+    <script src="views/assets/public/transition.js"></script>
     <title>Inicia sesion</title>
 </head>
 
 <body>
-    <main class="box-main">
+    <main class="auth-wrap">
 
-        <section class="first-box">
-
-
-            <form action="http://localhost/servicio-comunitario/controller/authAdmin/authController.php" autocomplete="off" method="post">
-                <header>
-                    <h2>Inicia sesion</h2>
-                </header>
-                <div class="input_area">
-                    <input type="email" name="email_log" id="user" class="entry" placeholder="Correo" minlength="3" maxlength="30" title="Se permiten letras, numeros y guines bajos, y la longitud debe ser de 3 a 30 caracteres" required>
-                    <div class="labelline"><span><img src="../assets/imgs/icons/at.svg" alt="icon"
-                                class="icon_user"></span></div>
-                </div>
-
-                <div class="input_password">
-                    <input type="password" id="password" class="entry_pass" name="passw_log"
-                        placeholder="Contraseña | Max 15 caracteres" minlength="8" maxlength="15" title="La contraseña debe contener: Al menos un letra minuscula, al menos un numero, al menos un caracter especial y de 8 a 15 caracteres." required>
-                    <div class="labelline_pass"><span><img src="../assets/imgs/icons/icons8-lock-48.png" alt="icon"
-                                class="icon_lock"></span>
-                    </div>
-                </div>
-                <article>
-                    <a href="../../views/auth-identification/index.php">¿Olvido su contraseña?</a>
-                </article>
-                <?php if (!empty($mensaje)): ?>
-                    <article class="success-box" name="success" id="success-box">
-                        <p><?php echo $mensaje ?></p>
-                        <div class="barra-de-tiempo"></div>
-                    </article>
-                    <script>
-                        
-                        // Redirigir al menú después de 3 segundos
-                        setTimeout(() => {
-                            window.location.href = "../../views/main-menu/index.php";
-                            error.style.display = "none"
-
-                        }, 3500);
-                    </script>
-                <?php endif ?>
-                <?php if (isset($_SESSION['error'])): ?>
-                    <article class="error-box" id="error-box">
-                        <p><?php echo $_SESSION['error'] ?></p>
-                        <?php unset($_SESSION['error']) ?>
-                    </article>
-                    <script>
-                        let error = document.getElementById('error-box')
-                        setTimeout(() => {
-                            error.style.display = "none"
-                        }, 2800)
-                    </script>
-                <?php endif ?>
-
-
-                <button class="ingresar" id="send">ingresar</button>
-            </form>
-            <article class="registro-link">
-                <a href="../register/index.php">¿No tienes cuenta? Registrate.</a>
-            </article>
-
+        <section class="auth-brand">
+            <div class="brand-inner">
+                <img src="views/assets/imgs/logo-unidos.webp" alt="Logo" class="brand-logo">
+                <h1>Consejo Comunal<br>Las Margaritas</h1>
+                <p>Sistema de gestión administrativa del consejo comunal "Unidos en Victoria, Siempre Venceremos".</p>
+                <span class="brand-tag">Venezuela · Estado Falcón</span>
+            </div>
         </section>
 
-        <section class="two-box">
+        <section class="auth-panel">
 
+            <form action="<?php echo base_url('/controller/authAdmin/authController.php') ?>" autocomplete="off" method="post" class="auth-card">
+
+                <header class="auth-head">
+                    <h2>Inicia sesión</h2>
+                    <p>Accede a tu cuenta para continuar</p>
+                </header>
+
+                <div class="field">
+                    <img src="views/assets/imgs/icons/fields/at.svg" alt="icon" class="icon">
+                    <input type="email" name="email_log" id="user" class="entry" placeholder="Correo" minlength="3" maxlength="30" title="Se permiten letras, numeros y guines bajos, y la longitud debe ser de 3 a 30 caracteres" required>
+                </div>
+
+                <div class="field">
+                    <img src="views/assets/imgs/icons/fields/icons8-lock-48.png" alt="icon" class="icon">
+                    <input type="password" id="password" class="entry_pass" name="passw_log" placeholder="Contraseña | Max 15 caracteres" minlength="8" maxlength="15" title="La contraseña debe contener: Al menos un letra minuscula, al menos un numero, al menos un caracter especial y de 8 a 15 caracteres." required>
+                </div>
+
+                <div class="auth-links">
+                    <a href="views/auth-identification/index.php">¿Olvidó su contraseña?</a>
+                </div>
+
+                <?php if (!empty($fieldErrors)): foreach ($fieldErrors as $field => $msg): ?>
+                    <script>FieldErrors.show(<?php echo json_encode((string)$field); ?>, <?php echo json_encode((string)$msg); ?>);</script>
+                <?php endforeach; endif ?>
+                <?php if ($logged): ?>
+                    <script>
+                        Toast.success('Has iniciado sesión correctamente.');
+                        setTimeout(() => { window.location.href = "<?php echo base_url('/views/main-menu/index.php'); ?>"; }, 1800);
+                    </script>
+                <?php endif ?>
+                <?php if (!empty($toastError)): ?>
+                    <script>Toast.error(<?php echo json_encode($toastError); ?>);</script>
+                <?php endif ?>
+
+                <button class="btn btn-primary btn-block" id="send">Ingresar</button>
+
+                <p class="auth-meta">
+                    <a href="views/register/index.php">¿No tienes cuenta? Regístrate.</a>
+                </p>
+
+            </form>
 
         </section>
 
     </main>
-
 
 </body>
 

@@ -1,8 +1,8 @@
 <?php
-include '../../models/conexion.php';
+require_once dirname(__DIR__, 2) . '/config.php';
 
 if (!isset($_POST['id_project']) || empty($_POST['id_project'])) {
-    header("Location: ../../views/sistem project/index.php?error=no_id");
+    redirect('/views/index.php?error=' . urlencode('No se proporcionó el ID del proyecto.'));
     exit();
 }
 
@@ -22,19 +22,19 @@ try {
 
     if ($proyectos_eliminados > 0) {
         $pdo->commit(); 
-        $mensaje = "👍 ¡Éxito! El proyecto **$id_project** fue eliminado, junto con $detalles_eliminados detalles.";
-        header("Location: ../../views/index.php?success=" . urlencode($mensaje));
+        $mensaje = 'El proyecto fue eliminado correctamente, junto con ' . $detalles_eliminados . ' detalle(s).';
+        redirect('/views/index.php?success=' . urlencode($mensaje));
     } else {
         $pdo->rollBack();
-        $mensaje = "⚠️ Error: El proyecto con ID **$id_project** no fue encontrado para eliminar.";
-        header("Location: ../../views/index.php?error=" . urlencode($mensaje));
+        $mensaje = 'El proyecto con ID ' . $id_project . ' no fue encontrado para eliminar.';
+        redirect('/views/index.php?error=' . urlencode($mensaje));
     }
 
 
 } catch (PDOException $e) {
     $pdo->rollBack(); 
-    $mensaje = "❌ Error al eliminar el proyecto: " . $e->getMessage();
-    header("Location: ../../views/sistem project/index.php?error=" . urlencode($mensaje));
+    $mensaje = 'Error al eliminar el proyecto.';
+    redirect('/views/index.php?error=' . urlencode($mensaje));
 }
 
 exit();

@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-include '../../models/conexion.php';
+require_once dirname(__DIR__, 2) . '/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../../views/recover-password/index.php');
+    redirect('/views/recover-password/index.php');
     exit();
 }
 
@@ -12,13 +12,16 @@ $question = isset($_POST['answer']) ? trim($_POST['answer']) : '';
 $questionTwo = isset($_POST['answer-2']) ? trim($_POST['answer-2']) : '';
 
 $errors = [];
-if ($question === '' || $questionTwo === '') {
-    $errors[] = 'Debe responder ambas preguntas.';
+if ($question === '') {
+    $errors['answer'] = 'Responda la primera pregunta.';
+}
+if ($questionTwo === '') {
+    $errors['answer-2'] = 'Responda la segunda pregunta.';
 }
 
 if (!empty($errors)) {
     $_SESSION['errors'] = $errors;
-    header('Location: ../../views/recover-password/index.php');
+    redirect('/views/recover-password/index.php');
     exit();
 }
 
@@ -27,8 +30,8 @@ $dbConnect = conexionDB();
 try {
     $idRecover = isset($_SESSION['id']) ? $_SESSION['id'] : null;
     if (!$idRecover) {
-        $_SESSION['errors'] = ['Identificación no encontrada. Inicio el proceso nuevamente.'];
-        header('Location: ../../views/auth-identification/index.php');
+        $_SESSION['error'] = 'Identificación no encontrada. Inicie el proceso nuevamente.';
+        redirect('/views/auth-identification/index.php');
         exit();
     }
 
@@ -38,26 +41,26 @@ try {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$user) {
-        $_SESSION['errors'] = ['No se encontraron preguntas de seguridad para este usuario.'];
-        header('Location: ../../views/auth-identification/index.php');
+        $_SESSION['error'] = 'No se encontraron preguntas de seguridad para este usuario.';
+        redirect('/views/auth-identification/index.php');
         exit();
     }
 
     $_SESSION['id_user'] = $user['id_user'];
 
     if (password_verify($question, $user['answer1']) && password_verify($questionTwo, $user['answer2'])) {
-        header('Location:../../views/change-password/index.php');
+        redirect('/views/change-password/index.php');
         exit();
     } else {
-        $_SESSION['errors'] = ['Respuestas incorrectas. Inténtalo de nuevo.'];
-        header('Location: ../../views/recover-password/index.php');
+        $_SESSION['error'] = 'Respuestas incorrectas. Inténtalo de nuevo.';
+        redirect('/views/recover-password/index.php');
         exit();
     }
 
 } catch (PDOException $e) {
     error_log('Recover error: ' . $e->getMessage());
-    $_SESSION['errors'] = ['Error en la consulta. Intente más tarde.'];
-    header('Location: ../../views/recover-password/index.php');
+    $_SESSION['error'] = 'Error en la consulta. Intente más tarde.';
+    redirect('/views/recover-password/index.php');
     exit();
 }
 

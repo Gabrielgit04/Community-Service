@@ -1,10 +1,10 @@
 <?php
 
-include '../../models/conexion.php';
+require_once dirname(__DIR__, 2) . '/config.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../../views/register/index.php');
+    redirect('/views/register/index.php');
     exit();
 }
 
@@ -19,22 +19,26 @@ $passw = isset($raw['passw']) ? $raw['passw'] : '';
 $rol = isset($raw['rol']) ? preg_replace('/[^A-Za-z0-9_\-]/', '', $raw['rol']) : '';
 
 // Validaciones básicas
+$errors = [];
 if ($id === '' || !preg_match('/^[0-9]{6,9}$/', $id)) {
-    $errors[] = 'Cédula inválida, debe tener entre 6 y 9 dígitos.';
+    $errors['id'] = 'Cédula inválida, debe tener entre 6 y 9 dígitos.';
 }
 if ($name === '' || !preg_match('/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s\-]{2,80}$/', $name)) {
-    $errors[] = 'Nombre inválido.';
+    $errors['nombre'] = 'Nombre inválido, solo letras y espacios.';
 }
 if ($correo === '' || !filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-    $errors[] = 'Correo inválido.';
+    $errors['email'] = 'Correo inválido.';
 }
 if ($passw === '' || strlen($passw) < 8) {
-    $errors[] = 'La contraseña debe tener al menos 8 caracteres.';
+    $errors['passw'] = 'La contraseña debe tener al menos 8 caracteres.';
+}
+if ($rol === '') {
+    $errors['rol'] = 'Seleccione un rol.';
 }
 
 if (!empty($errors)) {
     $_SESSION['errors'] = $errors;
-    header('Location: ../../views/register/index.php');
+    redirect('/views/register/index.php');
     exit();
 }
 
@@ -52,19 +56,19 @@ try {
 
     $query->execute();
     if ($query->rowCount() === 0) {
-        $_SESSION['errors'] = ['No se pudo registrar el usuario. Intente nuevamente.'];
-        header('Location: ../../views/register/index.php');
+        $_SESSION['error'] = 'No se pudo registrar el usuario. Intente nuevamente.';
+        redirect('/views/register/index.php');
         exit();
         }else{
             $_SESSION['success'] = true;
         }
     $_SESSION['idGlobal'] = $id;
-    header('Location: ../../views/register/index.php');
+    redirect('/views/register/index.php');
     exit();
 } catch (PDOException $e) {
     error_log('Register error: ' . $e->getMessage());
-    $_SESSION['errors'] = ['No se pudo registrar el usuario.'];
-    header('Location: ../../views/register/index.php');
+    $_SESSION['error'] = 'No se pudo registrar el usuario.';
+    redirect('/views/register/index.php');
     exit();
 }
 

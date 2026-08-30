@@ -1,10 +1,10 @@
 <?php
 session_start();
-include '../../models/conexion.php';
+require_once dirname(__DIR__, 2) . '/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
-    $_SESSION['errors'] = ['Metodo de envio incorrecto'];
-    header('Location: ../../views/register-civil/read/index.php');
+    $_SESSION['error'] = 'Método de envío incorrecto.';
+    redirect('/views/register-civil/read/index.php');
     exit();
 }
 
@@ -29,10 +29,20 @@ $mapFields = [
 
 
 // Datos recibidos
-$idCivil = filter_var($_GET['cedula'],FILTER_SANITIZE_NUMBER_INT);
-$choiceOption = $_GET['choiceUpdate'];  
-$updateField = ucwords($_GET['UPDATE_FIELD']);
+$idCivil = isset($_GET['cedula']) ? filter_var($_GET['cedula'], FILTER_SANITIZE_NUMBER_INT) : '';
+$choiceOption = isset($_GET['choiceUpdate']) ? $_GET['choiceUpdate'] : '';
+$updateField = isset($_GET['UPDATE_FIELD']) ? ucwords($_GET['UPDATE_FIELD']) : '';
 
+if ($idCivil === '' || !isset($mapFields[$choiceOption])) {
+    $_SESSION['error'] = 'Parámetros de actualización inválidos.';
+    redirect('/views/register-civil/read/index.php');
+    exit();
+}
+if ($updateField === '') {
+    $_SESSION['error'] = 'El campo a actualizar no puede estar vacío.';
+    redirect('/views/register-civil/read/index.php');
+    exit();
+}
 
 $db = conexionDB();
 try {
@@ -45,11 +55,11 @@ try {
     $update->execute();
 
     $_SESSION['mensaje_update'] = true;
-    header('Location: ../../views/register-civil/read/index.php');
+    redirect('/views/register-civil/read/index.php');
     exit();
 } catch (PDOException $e) {
     error_log('Update error: ' . $e->getMessage());
-    //$_SESSION['errors'] = ['Error al actualizar el registro.'];
-    header('Location: ../../views/register-civil/read/index.php');
+    $_SESSION['error'] = 'Error al actualizar el registro.';
+    redirect('/views/register-civil/read/index.php');
     exit();
 }

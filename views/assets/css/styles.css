@@ -1,419 +1,212 @@
-*{
-    box-sizing: border-box;
+/* ============================================================
+   Auth: Login + Registro
+   ============================================================ */
+
+/* ------- Login ------- */
+.auth-wrap {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  min-height: 100dvh;
 }
 
-body{
-    margin: 0;
-    height: 100dvh;
-
+.auth-brand {
+  background:
+    radial-gradient(900px 600px at 15% 10%, rgba(255, 255, 255, .08), transparent 55%),
+    linear-gradient(160deg, var(--navy-800) 0%, var(--navy-900) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: #fff;
 }
 
-/* registro y login estilos */
-.container{
-    max-width: 100%;
-    height: 100dvh;
-    background-color: rgb(2, 20, 155);
-    display: flex;
-    animation: aparicion 2s ease-in-out;
-
+.brand-inner {
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-.back{
-    background-color: rgba(236, 236, 13, 0.988);
-    width: 700px;
-    border-radius: 0% 26% 26%  0%;
-    height: 100dvh;
-    transform: translateX(-20px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.brand-logo {
+  width: 110px;
+  height: 90px;
+  object-fit: contain;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, .1);
+  padding: 10px;
 }
 
-.unidos_logo{
-    width: 250px;
-    height: 200px;
-    border-radius:0% 20% 20% 0%;
-    animation: girar 2s infinite;
+.brand-inner h1 {
+  font-size: 2.1rem;
+  line-height: 1.15;
+  font-weight: 600;
 }
 
-.informacion{
-    width: 1000px;
-    background-color: rgba(8, 24, 146, 0.807);
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+.brand-inner p {
+  color: #c7d2fe;
+  font-family: var(--font-light);
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
 }
 
-.informacion form{
-    width: 450px;
-    height: 450px;
-    display: flex;
-    flex-direction:column;
-    height: fit-content;
-    align-items: center;
-    /* justify-content: center; */
-    background-color: whitesmoke;
-    gap: 20px;
-    border-radius: 20px;
-
-}
-#small-error{
-        color: red;
-        font-family: 'Poppins', Arial, Helvetica, sans-serif;
-        padding: 10px;
-        font-size: 12px;
-        margin: 0 20px;
-    }
-#small-success{
-    color: rgb(235, 239, 234);
-    font-family: 'Poppins', Arial, Helvetica, sans-serif;
-    padding: 10px;
-    font-size: 12px;
-    margin: 0 20px;
-    padding: 10px;
-    background-color: #28a745;
-    border-radius: 6px;
-}
-.inputs{
-    width: 100%;
-    display: flex;
-    flex-direction:column;
-    gap: 5px;
-    padding: 15px;
-    transform: translateY(-35px);
-}
-.entry,.entry_pass{
-    position: absolute;
-    width: 90%;
-    line-height: 28px;
-    outline: none;
-    border-radius: 10px;
-    border: solid #DDDDDD;
-    background-color: #DDDDDD;
-    text-indent: 35px;
-    transition: al ease .2s;
-    left: 23px;
-    /* box-shadow: 0 0 6px darkslategray; */
-}
-.input_form{
-    position: relative;
-    height:30px;
-    line-height: 28px;
-    margin: 5px 0 10px 0;
-    padding: 4px;
-}
-.labelline,.labelline_pass{
-    position: absolute;
-    z-index: 1111;
-    font-size: 13;
-    font-weight: bold;
-    padding: 0.5;
-    margin: 0 23px;
-}
-.icon_lock{
-    width: 25px;
-    height: 25px;
-}
-.icon_lock,.icon_user,.icon_email,.icon_id{
-    margin-top: 6px;
+.brand-tag {
+  display: inline-block;
+  width: fit-content;
+  padding: 8px 14px;
+  border: 1px solid rgba(255, 255, 255, .25);
+  border-radius: 999px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #e0e7ff;
 }
 
-.hd-box-title{
-    width: 100% ;
-    text-align: center;
-    margin-top: 20px;
-    font-family: 'Poppins',Arial, Helvetica, sans-serif;
-    color: rgba(191, 9, 9, 0.874);
+.auth-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: var(--bg);
 }
 
-.inputs select{
-    margin-top: 10px;
-    width: 90%;
-    transform: translateX(23px);
-    height: 30px;
-    border-radius: 6px;
-    background-color: #DDDDDD;
-    font-weight: 600;
-    color: rgb(63, 63, 63);
-}
-.entry:focus::placeholder,.entry_pass:focus::placeholder{
-    opacity: 0;
-}
-.entry::placeholder,.entry_pass::placeholder{
-    font-weight: bold;
-}
-.inputs button{
-    height: 35px;
-    width: 90%;
-    transform: translateX(23px);
-    margin-top: 15px;
-    border-radius: 7px;
-    border: 1px solid  rgba(8, 24, 146, 0.807);
-    background-color:  rgba(8, 24, 146, 0.807);
-    color: whitesmoke;
-    font-weight: 600;
-    letter-spacing: 2px;
-    cursor: pointer;
-}
-/* registro hasta aca */
-
-/* aca empiezo con lo demas del login */
-.box-main{
-    display: flex;
-    background-color: rgba(2, 20, 155);
-    animation: aparicion-2 2s ease-in-out
-}
-.first-box{
-    width: 700px;
-    height: 100dvh;
-    background-color:rgba(6, 23, 152, 0.893);
-    display: flex;
-    padding: 10px;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;    
-}
-.first-box form{
-    width: 400px;
-    height: 420px;
-    min-height: fit-content;
-    padding: 10px;
-    background-color:whitesmoke;
-    border-radius: 20px;
-    /* box-shadow: 0 0 10px whitesmoke; */
-    gap: 9px;
-}
-.first-box form header{
-    width: 100%;
-    padding: 10px;
-    text-align: center;
-    font-family: 'Poppins', Arial, Helvetica, sans-serif;
-    font-size: 21px;
-    color: rgba(199, 16, 16, 0.895);
-}
-article a{
-    width: fit-content;
-    height: fit-content;
-    font-size: 12px;
-    color: rgba(47, 79, 79, 0.697);
-    text-decoration: none;
-    transition: .3s;
-    font-family: 'Poppins',Arial, Helvetica, sans-serif;
-    margin-right: 28px;
-    margin-top: 5px;
-}
-article{
-    text-align: right;
-    margin-top: 7px;
-}
-.registro-link a{
-    width: fit-content;
-    height: fit-content;
-    font-size: 15px;
-    color: whitesmoke;
-    text-decoration: none;
-    transition: .3s;
-    font-family: 'Poppins',Arial, Helvetica, sans-serif;
-    margin-right: 28px;
-    margin-top: 20px;
-
-}
-.registro-link a:hover{
-    text-decoration: underline;
-}
-.two-box{
-    width: 800px;
-    height: 100dvh;
-    background:url(../imgs/laptop2.webp);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    border-radius: 0 0 0 38%;
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--surface);
+  padding: 36px 30px;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
 }
 
-.input_area,.input_password{
-    position: relative;
-    height:50px;
-    line-height: 50px;
-    margin: 20px 0 0px 0;
-    padding: 8px;
+.auth-head h2 {
+  font-size: 1.6rem;
+  color: var(--navy-800);
 }
 
-.ingresar{
-    height: 35px;
-    width: 90%;
-    text-transform: uppercase;
-    transform: translateX(23px);
-    font-family: 'Poppins',Arial, Helvetica, sans-serif;
-    margin-top:60px;
-    border-radius: 7px;
-    border: 1px solid  rgba(8, 24, 146, 0.807);
-    background-color:  rgba(8, 24, 146, 0.807);
-    color: whitesmoke;
-    font-weight: 600;
-    letter-spacing: 2px;
-    cursor: pointer;
+.auth-head p {
+  margin: 6px 0 0;
+  color: var(--text-muted);
+  font-size: 14px;
 }
 
-/* login hasta aca */
+.auth-links {
+  text-align: right;
+}
+.auth-links a {
+  font-size: 13px;
+  color: var(--primary);
+  font-weight: 500;
+}
+.auth-links a:hover { text-decoration: underline; }
 
-footer{
-    display: none;
+.btn-block { width: 100%; }
+
+.auth-meta {
+  text-align: center;
+  font-size: 14px;
+  margin: 0;
+}
+.auth-meta a { color: var(--primary); font-weight: 500; }
+.auth-meta a:hover { text-decoration: underline; }
+
+/* ------- Registro (compartido) ------- */
+.container {
+  display: flex;
+  min-height: 100dvh;
+  background: var(--bg);
 }
 
-/* impportando fuente */
-@font-face {
-    font-family: 'Poppins';
-    src: url(../fonts/Poppins-Black.ttf) format('truetype');
+.back {
+  flex: 1 1 40%;
+  background:
+    radial-gradient(800px 500px at 20% 10%, rgba(255, 255, 255, .08), transparent 55%),
+    linear-gradient(160deg, var(--navy-700) 0%, var(--navy-900) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
 }
 
-/* responsive design */
-@media( width < 450px) and (height > 600px){
-
-    body{
-        overflow-y: scroll;
-    }
-    /* registro responsive */
-    .container{
-        flex-direction: column;
-        justify-content: center;
-        align-items:center ;
-        padding: 10px;
-        gap: 20px;
-    }
-    .back{
-        display:none;
-        }
-    .unidos_logo{
-        margin: 0;
-        width: 80px;
-        height:40px;
-        margin-bottom: 20px;
-    }
-    .informacion{
-        width: 100%;
-        height: 100dvh;
-        padding: 20px 0;
-        
-    }
-    .informacion form{
-        width: 90%;
-        height: auto;
-        padding: 20px 0;
-    }
-
-    .registro-link a{
-        margin-right: 0;
-        margin-top: 30px;
-    }
-
-    footer{
-        display: flex;
-        color: whitesmoke;
-        .box main{
-            flex-direction: column;
-            width: 100%;
-            height: 100dvh;
-        
-        
-            
-        }
-        .two-box{
-            display: none;}
-        
-            .first-box{
-                width: 100%;
-                border-radius: 0;
-                height: 100dvh;
-                padding: 40px;}
-        
-                .first-box form{
-                    width: 120%;
-                    height: auto;
-                    padding: 20px 0;
-                }
-    }
-}
-/* hasta aca */
-.success-box{
-    background-color:#28a745;
-    width: 89%;
-    text-align: center;
-    height: fit-content;
-    border-radius: 6px;
-    display:flex ;
-    position: relative;
-    left:6% ;
-    margin: 10px 0 0 0;
-    transition: all ease-in-out .4s;
-}
-.error-box{
-    background-color:#a10f0f;
-    width: 89%;
-    text-align: center;
-    height: fit-content;
-    border-radius: 6px;
-    display:flex ;
-    position: relative;
-    left:6% ;
-    margin: 10px 0 0 0;
-}
-.success-box p, .error-box p{
-    color: #DDDDDD;
-    font-family:'Poppins' ;
-    width: 100%;
-    text-align: center;
+.unidos_logo {
+  width: 220px;
+  height: 180px;
+  object-fit: contain;
+  background: rgba(255, 255, 255, .12);
+  border-radius: var(--radius-xl);
+  padding: 20px;
 }
 
-.barra-de-tiempo {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    height: 5px;
-    border-radius: 10px 0 10px 0px;
-    background-color: #DDDDDD;
-    width: 100%;
-    animation: shrink 2s linear forwards; /* duración: 5 segundos */
-    animation-delay: 1.2s;
+.informacion {
+  flex: 1 1 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  gap: 24px;
 }
 
-
-
-
-
-
-
-
-/* animaciones */
-@keyframes aparicion{
-    from{
-            transform: translateY(-100%);
-            opacity: 0;
-    }
-    to{
-            transform: translateY(0%);
-            opacity: 1;
-    
-    }
-}
-@keyframes aparicion-2{
-    from{
-        visibility: hidden;
-        opacity: 0;
-}
-to{
-        visibility: visible;
-        opacity: 1;
-}
+.informacion form {
+  width: 100%;
+  max-width: 440px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-    @keyframes shrink {
-        from {
-        width: 100%;
-        }
-        to {
-        width: 0%;
-    }
-        }
-        
+.hd-box-title {
+  text-align: center;
+  color: var(--navy-800);
+  font-size: 1.4rem;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.inputs select {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: var(--font-light);
+  font-size: 14px;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  outline: none;
+}
+.inputs select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(26, 53, 119, .12);
+}
+
+.registro-link {
+  text-align: center;
+}
+.registro-link a {
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 500;
+}
+.registro-link a:hover { text-decoration: underline; }
+
+/* ------- Responsive auth ------- */
+@media (max-width: 860px) {
+  .auth-wrap { grid-template-columns: 1fr; }
+  .auth-brand { display: none; }
+  .container { flex-direction: column; align-items: center; padding: 24px; }
+  .back { display: none; }
+  .informacion { width: 100%; padding: 20px 16px; }
+  .auth-panel { padding: 24px 16px; }
+}
