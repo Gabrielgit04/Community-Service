@@ -1,6 +1,9 @@
 <?php
 require_once dirname(__DIR__, 2) . '/config.php';
 
+requireLogin();
+csrf_check();
+
 if (!isset($_POST['id_project']) || empty($_POST['id_project'])) {
     redirect('/views/index.php?error=' . urlencode('No se proporcionó el ID del proyecto.'));
     exit();

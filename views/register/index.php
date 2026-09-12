@@ -3,7 +3,6 @@ $__root = dirname(__DIR__);
 while (!is_file($__root . '/config.php')) { $__root = dirname($__root); }
 require_once $__root . '/config.php';
 
-session_start();
 if (isset($_SESSION['errors']) && is_array($_SESSION['errors'])) {
     $errors = $_SESSION['errors'];
     unset($_SESSION['errors']);
@@ -41,6 +40,8 @@ if (isset($_SESSION['success']) && $_SESSION['success'] == true) {
         <section class="informacion">
 
             <form action="<?php echo base_url('/controller/authAdmin/registerController.php') ?>" autocomplete="off" method="post">
+
+                <?php echo csrf_field(); ?>
 
                 <header class="hd-box-title"><h2>Crea tu usuario</h2></header>
 

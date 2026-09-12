@@ -6,6 +6,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
+requireLogin();
+csrf_check();
+
 $id = isset($_POST['Id']) ? trim($_POST['Id']) : '';
 $name_project = isset($_POST['Titulo']) ? ucfirst(trim($_POST['Titulo'])) : '';
 $fecha_inicio = isset($_POST['Fecha_inicio']) ? $_POST['Fecha_inicio'] : '';

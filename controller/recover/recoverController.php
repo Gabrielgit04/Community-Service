@@ -1,12 +1,12 @@
 <?php
-session_start();
-
 require_once dirname(__DIR__, 2) . '/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     redirect('/views/recover-password/index.php');
     exit();
 }
+
+csrf_check();
 
 $question = isset($_POST['answer']) ? trim($_POST['answer']) : '';
 $questionTwo = isset($_POST['answer-2']) ? trim($_POST['answer-2']) : '';

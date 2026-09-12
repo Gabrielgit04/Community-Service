@@ -31,7 +31,7 @@ $_SESSION["id_user"] = $_SESSION['ci'];
                 </a>
             </figure>
             <figure class="figTwo">
-                <a href="views/register-civil/home-register.html">
+                <a href="views/register-civil/home-register.php">
                     <img src="views/assets/imgs/icons/nav/user-plus.svg" alt="Opción 2">
                     <h4>Registro Civil</h4>
                 </a>

@@ -2,6 +2,8 @@
 $__root = dirname(__DIR__);
 while (!is_file($__root . '/config.php')) { $__root = dirname($__root); }
 require_once $__root . '/config.php';
+
+requireLogin();
 ?>
 <!DOCTYPE html>
 <html lang="es">

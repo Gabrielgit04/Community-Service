@@ -21,6 +21,7 @@ require_once $__root . '/config.php';
 
         
         <form action="<?php echo base_url('/controller/authAdmin/validateSession.php') ?>" method="post" autocomplete="off" class="recover-form">
+            <?php echo csrf_field(); ?>
             <header class="header-box"><h2>Protege tu cuenta</h2></header>
 
             <select id="security-question" name="security-question" required>

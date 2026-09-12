@@ -1,13 +1,15 @@
 <?php
 
 require_once dirname(__DIR__, 2) . '/config.php';
-session_start();
 
 // sólo aceptar POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     exit('Método no permitido');
 }
+
+requireLogin();
+csrf_check();
 
 $errors = [];
 

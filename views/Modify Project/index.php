@@ -2,15 +2,8 @@
 $__root = dirname(__DIR__);
 while (!is_file($__root . '/config.php')) { $__root = dirname($__root); }
 require_once $__root . '/config.php';
-?>
 
-<?php
-
-session_start();
-
-if(!isset($_SESSION['nombre'])){
-    redirect('/views/login/index.php');
-};
+requireLogin();
 
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     die("Error: No se proporcionó ID de proyecto para modificar.");
@@ -68,6 +61,7 @@ function format_price_for_display($price) {
     </header>
 
     <form id="formulario_datos" action="<?php echo base_url('/controller/system-project/modify project.php') ?>" method="POST">
+        <?php echo csrf_field(); ?>
         <div class="list-option">
             <article class="contenedor_entradas1">
                 <input type="hidden" name="Id" value="<?php echo htmlspecialchars($proyecto['id_project']); ?>">

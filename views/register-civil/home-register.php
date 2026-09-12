@@ -1,8 +1,15 @@
+<?php
+$__root = dirname(__DIR__);
+while (!is_file($__root . '/config.php')) { $__root = dirname($__root); }
+require_once $__root . '/config.php';
+
+requireLogin();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <base href="../../">
+    <base href="<?php echo base_url('/'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="views/assets/css/base.css">
     <link rel="stylesheet" href="views/assets/css/register-civil-style.css">

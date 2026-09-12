@@ -1,6 +1,7 @@
 <?php
 require_once dirname(__DIR__, 2) . '/config.php';
 
+requireLogin();
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
 
@@ -18,7 +19,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         $query->execute();
 
         $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
-        session_start();
         $_SESSION['search']= $fetch;
         redirect('/views/register-civil/read/index.php');
 

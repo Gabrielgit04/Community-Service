@@ -1,11 +1,13 @@
 <?php
 require_once dirname(__DIR__, 2) . '/config.php';
-session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     redirect('/views/index.php');
     exit();
 }
+
+requireLogin();
+csrf_check();
 
 $id = htmlspecialchars($_POST["Id"]);
 $name_project = htmlspecialchars(ucfirst($_POST["Titulo"]));

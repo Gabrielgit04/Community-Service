@@ -4,7 +4,6 @@ while (!is_file($__root . '/config.php')) { $__root = dirname($__root); }
 require_once $__root . '/config.php';
 ?>
 <?php
-session_start();
 $errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
 unset($_SESSION['errors']);
 $toastError = isset($_SESSION['error']) ? $_SESSION['error'] : '';
@@ -31,6 +30,7 @@ unset($_SESSION['error']);
 
         
         <form action="<?php echo base_url('/controller/recover/recoverController.php') ?>" method="post" autocomplete="off">
+            <?php echo csrf_field(); ?>
             <header class="header-box"><h2>Recupera tu cuenta</h2></header>
 
             <h5 class="text"><?php echo $_SESSION['q1'] ?></h5>

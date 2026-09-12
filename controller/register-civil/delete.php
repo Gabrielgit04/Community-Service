@@ -1,24 +1,27 @@
 <?php
-session_start();
 
 require_once dirname(__DIR__, 2) . '/config.php';
 
-if (!isset($_GET['cedula']) || trim($_GET['cedula']) === '') {
+requireLogin();
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    $_SESSION['error'] = 'Método de envío incorrecto.';
+    redirect('/views/register-civil/read/index.php');
+    exit();
+}
+
+csrf_check();
+
+if (!isset($_POST['cedula']) || trim($_POST['cedula']) === '') {
     $_SESSION['error'] = 'No se pudo obtener la cédula.';
     redirect('/views/register-civil/read/index.php');
     exit();
 }
 
-$idUserEliminated = filter_var($_GET['cedula'], FILTER_SANITIZE_NUMBER_INT);
+$idUserEliminated = filter_var($_POST['cedula'], FILTER_SANITIZE_NUMBER_INT);
 
 if ($idUserEliminated === '') {
     $_SESSION['error'] = 'No se pudo obtener la cédula.';
-    redirect('/views/register-civil/read/index.php');
-    exit();
-}
-
-if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
-    $_SESSION['error'] = 'Método de envío incorrecto.';
     redirect('/views/register-civil/read/index.php');
     exit();
 }

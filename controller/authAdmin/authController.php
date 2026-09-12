@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once dirname(__DIR__, 2) . '/config.php';
 
 date_default_timezone_set('America/Caracas');
@@ -8,6 +7,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     redirect('/views/login/index.php');
     exit();
 }
+
+csrf_check();
 
 $emailUser = isset($_POST['email_log']) ? trim($_POST['email_log']) : '';
 $passUser = isset($_POST['passw_log']) ? $_POST['passw_log'] : '';
@@ -54,6 +55,9 @@ try {
         setcookie('lastVisited', $dateNow, time() + (86400 * 30));
 
         unset($_SESSION['error']);
+
+        // Evita la fijación de sesión: renovar el ID tras el login.
+        session_regenerate_id(true);
 
         redirect('/views/login/index.php');
         exit();

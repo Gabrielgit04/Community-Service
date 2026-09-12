@@ -1,12 +1,13 @@
 <?php
 
 require_once dirname(__DIR__, 2) . '/config.php';
-session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     redirect('/views/register/index.php');
     exit();
 }
+
+csrf_check();
 
 $errors = [];
 

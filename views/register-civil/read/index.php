@@ -2,11 +2,8 @@
 $__root = dirname(__DIR__);
 while (!is_file($__root . '/config.php')) { $__root = dirname($__root); }
 require_once $__root . '/config.php';
-session_start();
 
-if (!isset($_SESSION['correo'])) {
-    redirect('/views/login/index.php');
-};
+requireLogin();
 
 $mensaje = '';
 if (isset($_SESSION['delete']) && $_SESSION['delete'] == true) {
@@ -62,13 +59,14 @@ if (!empty($_SESSION['search'])) {
 
 
         <div class="header-left">
-            <a href="views/register-civil/home-register.html" class="btn-back" title="Volver">
+            <a href="views/register-civil/home-register.php" class="btn-back" title="Volver">
                 <img src="views/assets/imgs/icons/nav/arrow-left.svg" alt="Volver">
             </a>
             <h2>Personas registradas en la comunidad</h2>
         </div>
         <span class="span-search">
             <form action="controller/register-civil/search.php" autocomplete="off" method="POST">
+                <?php echo csrf_field(); ?>
                 <button id="btnSearch"><img src="views/assets/imgs/icons/actions/search.svg" alt="search"></button>
                 <input type="search" name="search" class="search" id="search" placeholder="Buscar por Nombre | Apellido | Cedula" style="text-transform: capitalize; " required>
             </form>
@@ -135,14 +133,26 @@ if (!empty($_SESSION['search'])) {
         </div>
         <dialog id="dialog-delete-confirm">
             <h3 style="color: darkslategray;">Confirmar eliminación</h3>
-            <p>¿Estás seguro de que deseas eliminar al ciudadano con cédula <b id="deleteTarget">—</b>? Esta acción no se puede deshacer.</p>
-            <input type="hidden" id="deleteCi" value="">
-            <div class="actions">
-                <button class="danger" name='confirmDelete' id="confirm-btn" type="button" onclick="validarFormularioEliminar()">Eliminar</button>
-                <button class="cancel" id="close" type="button" onclick="closeDialogTwo()">Cancelar</button>
+            <div class="dialog-form">
+                <p>¿Estás seguro de que deseas eliminar al ciudadano con cédula <b id="deleteTarget">—</b>? Esta acción no se puede deshacer.</p>
+                <form id="form-delete" action="controller/register-civil/delete.php" method="POST" style="display:none;">
+                    <?php echo csrf_field(); ?>
+                    <input type="hidden" id="deleteCi" name="cedula" value="">
+                </form>
+                <div class="actions">
+                    <button class="danger" name='confirmDelete' id="confirm-btn" type="button" onclick="validarFormularioEliminar()">Eliminar</button>
+                    <button class="cancel" id="close" type="button" onclick="closeDialogTwo()">Cancelar</button>
+                </div>
             </div>
         </dialog>
 
+
+        <form id="form-update" action="controller/register-civil/update.php" method="POST" style="display:none;">
+            <?php echo csrf_field(); ?>
+            <input type="hidden" name="cedula" id="form-update-cedula" value="">
+            <input type="hidden" name="choiceUpdate" id="form-update-choice" value="">
+            <input type="hidden" name="UPDATE_FIELD" id="form-update-value" value="">
+        </form>
 
         <!-- Edit dialog -->
         <dialog id="dialog-edit" class="dialog-edit">

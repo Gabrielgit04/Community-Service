@@ -14,14 +14,17 @@ function closeDialogTwo() {
     dialog.close();
 }
 
-// Envío de la eliminación (el controller espera la cédula en query string)
+// Envío de la eliminación vía POST (con token CSRF en el formulario oculto).
 function validarFormularioEliminar() {
     const cedula = document.getElementById("deleteCi").value;
     if (!cedula) {
         Toast.error('Ingrese una cédula válida antes de confirmar.');
         return false;
     }
-    window.location.href = "controller/register-civil/delete.php?cedula=" + encodeURIComponent(cedula);
+    const form = document.getElementById("form-delete");
+    if (form && typeof form.submit === "function") {
+        form.submit();
+    }
 }
 
 // Apertura del dialog de edición desde los botones de la tabla
@@ -98,9 +101,16 @@ function validarFormularioEditar() {
         return false;
     }
 
-    // Redirigir vía GET con parámetros
-    const url = `controller/register-civil/update.php?cedula=${encodeURIComponent(cedula)}&choiceUpdate=${encodeURIComponent(choiceUpdate)}&UPDATE_FIELD=${encodeURIComponent(updateField)}`;
-    window.location.href = url;
+    // Enviar vía POST con el token CSRF del formulario oculto.
+    const hiddenForm = document.getElementById("form-update");
+    if (!hiddenForm || typeof hiddenForm.submit !== "function") {
+        Toast.error('No se pudo enviar la actualización.');
+        return false;
+    }
+    document.getElementById("form-update-cedula").value = cedula;
+    document.getElementById("form-update-choice").value = choiceUpdate;
+    document.getElementById("form-update-value").value = updateField;
+    hiddenForm.submit();
 }
 
 function changeInput() {

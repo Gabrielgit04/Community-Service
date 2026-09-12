@@ -3,7 +3,6 @@ $__root = dirname(__DIR__);
 while (!is_file($__root . '/config.php')) { $__root = dirname($__root); }
 require_once $__root . '/config.php';
 
-session_start();
 $errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
 unset($_SESSION['errors']);
 $toastError = isset($_SESSION['error']) ? $_SESSION['error'] : '';
@@ -30,6 +29,7 @@ unset($_SESSION['error']);
 
         
         <form action="<?php echo base_url('/controller/recover/authIdController.php') ?>" method="post" autocomplete="off" class="ced-form">
+            <?php echo csrf_field(); ?>
             <header class="header-box"><h2>Identificate</h2></header>
             <p>Ingresa tu cedula para identificarte</p>
 

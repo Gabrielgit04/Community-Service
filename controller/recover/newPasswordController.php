@@ -1,11 +1,12 @@
 <?php
-session_start();
 require_once dirname(__DIR__, 2) . '/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     redirect('/views/change-password/index.php');
     exit();
 }
+
+csrf_check();
 
 $newPassword = isset($_POST['new_password']) ? trim($_POST['new_password']) : '';
 $repeatPassword = isset($_POST['rep_password']) ? trim($_POST['rep_password']) : '';

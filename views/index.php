@@ -4,11 +4,7 @@ $__root = dirname(__DIR__);
 while (!is_file($__root . '/config.php')) { $__root = dirname($__root); }
 require_once $__root . '/config.php';
 
-session_start();
-
-if(!isset($_SESSION['nombre'])){
-    redirect('/views/login/index.php');
-}
+requireLogin();
 
 $proyectos = [];
 $dbError = null;
@@ -75,7 +71,8 @@ try {
                                     <a href="views/Visualize Project/index.php?id=<?php echo htmlspecialchars($proyecto['id_project']); ?>" class="btn-accion btn-ver">Ver</a>
                                     <a href="views/Modify Project/index.php?id=<?php echo htmlspecialchars($proyecto['id_project']); ?>" class="btn-accion btn-editar">Editar</a>
                                     <form action="<?php echo base_url('/controller/system-project/eliminate project.php') ?>" method="POST" style="display:inline;">
-                                        <input type="hidden" name="id_project" value="<?php echo htmlspecialchars($proyecto['id_project']); ?>">
+                                            <?php echo csrf_field(); ?>
+                                            <input type="hidden" name="id_project" value="<?php echo htmlspecialchars($proyecto['id_project']); ?>">
                                         <button type="submit"
                                             onclick="return confirm('¿Está seguro de que desea eliminar el proyecto \'<?php echo htmlspecialchars($proyecto['name_project']); ?>\'? Esto es irreversible.');" class="btn-accion btn-eliminar">Eliminar
                                         </button>

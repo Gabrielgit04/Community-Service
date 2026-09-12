@@ -4,7 +4,6 @@ while (!is_file($__root . '/config.php')) { $__root = dirname($__root); }
 require_once $__root . '/config.php';
 ?>
 <?php
-session_start();
 $fieldErrors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
 unset($_SESSION['errors']);
 $toastError = isset($_SESSION['error']) ? $_SESSION['error'] : '';
@@ -49,6 +48,8 @@ if (isset($_SESSION['Logueado']) && $_SESSION['Logueado'] == true) {
         <section class="auth-panel">
 
             <form action="<?php echo base_url('/controller/authAdmin/authController.php') ?>" autocomplete="off" method="post" class="auth-card">
+
+                <?php echo csrf_field(); ?>
 
                 <header class="auth-head">
                     <h2>Inicia sesión</h2>

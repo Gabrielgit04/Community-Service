@@ -1,11 +1,12 @@
 <?php
-session_start();
 require_once dirname(__DIR__, 2) . '/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     redirect('/views/auth-identification/index.php');
     exit();
 }
+
+csrf_check();
 
 $idCi = isset($_POST['ci_quest']) ? preg_replace('/\D/', '', $_POST['ci_quest']) : '';
 

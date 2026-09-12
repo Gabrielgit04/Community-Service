@@ -2,12 +2,9 @@
 $__root = dirname(__DIR__);
 while (!is_file($__root . '/config.php')) { $__root = dirname($__root); }
 require_once $__root . '/config.php';
-?>
-<?php
-session_start();
-if (!isset($_SESSION['nombre'])) {
-    redirect('/views/login/index.php');
-}
+
+requireLogin();
+
 $fieldErrors = isset($_SESSION['errores']) ? $_SESSION['errores'] : [];
 unset($_SESSION['errores']);
 $toastError = isset($_SESSION['error']) ? $_SESSION['error'] : '';
@@ -38,7 +35,7 @@ if (isset($_SESSION['mensaje']) && $_SESSION['mensaje'] == true) {
     <section class="form-all-cont">
 
         <div class="cont-header">
-            <a href="views/register-civil/home-register.html"><img src="views/assets/imgs/icons/nav/arrow-left.svg" alt="exit" class="exit"></a>
+            <a href="views/register-civil/home-register.php"><img src="views/assets/imgs/icons/nav/arrow-left.svg" alt="exit" class="exit"></a>
             <header>
                 <h2>Registra a las personas de tu comunidad</h2>
             </header>
@@ -74,6 +71,7 @@ if (isset($_SESSION['mensaje']) && $_SESSION['mensaje'] == true) {
         <div class="form-container">
             <h2 style="text-transform: uppercase;">Ingresa sus datos</h2>
             <form action="<?php echo base_url('/controller/register-civil/insert.php') ?>" method="post" autocomplete="off">
+                <?php echo csrf_field(); ?>
                 <section>
                     <div class="field">
                         <img src="views/assets/imgs/icons/fields/id.svg" alt="icon" class="icon">

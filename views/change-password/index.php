@@ -3,7 +3,6 @@ $__root = dirname(__DIR__);
 while (!is_file($__root . '/config.php')) { $__root = dirname($__root); }
 require_once $__root . '/config.php';
 
-session_start();
 $idUsuario = isset($_SESSION["id_user"]) ? $_SESSION["id_user"] : '';
 $errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
 unset($_SESSION['errors']);
@@ -29,6 +28,7 @@ unset($_SESSION['error']);
 
 
         <form action="controller/recover/newPasswordController.php" method="POST" class="form-change">
+            <?php echo csrf_field(); ?>
             <h1>Cambia tu contraseña</h1>
         <input type="hidden" name="id_user" value="<?php echo htmlspecialchars($idUsuario); ?>">
         <div class="input_area">

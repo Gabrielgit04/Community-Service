@@ -1,12 +1,15 @@
 <?php
-session_start();
 require_once dirname(__DIR__, 2) . '/config.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+requireLogin();
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     $_SESSION['error'] = 'Método de envío incorrecto.';
     redirect('/views/register-civil/read/index.php');
     exit();
 }
+
+csrf_check();
 
 
 $mapFields = [
@@ -29,9 +32,9 @@ $mapFields = [
 
 
 // Datos recibidos
-$idCivil = isset($_GET['cedula']) ? filter_var($_GET['cedula'], FILTER_SANITIZE_NUMBER_INT) : '';
-$choiceOption = isset($_GET['choiceUpdate']) ? $_GET['choiceUpdate'] : '';
-$updateField = isset($_GET['UPDATE_FIELD']) ? ucwords($_GET['UPDATE_FIELD']) : '';
+$idCivil = isset($_POST['cedula']) ? filter_var($_POST['cedula'], FILTER_SANITIZE_NUMBER_INT) : '';
+$choiceOption = isset($_POST['choiceUpdate']) ? $_POST['choiceUpdate'] : '';
+$updateField = isset($_POST['UPDATE_FIELD']) ? ucwords($_POST['UPDATE_FIELD']) : '';
 
 if ($idCivil === '' || !isset($mapFields[$choiceOption])) {
     $_SESSION['error'] = 'Parámetros de actualización inválidos.';

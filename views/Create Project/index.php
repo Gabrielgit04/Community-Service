@@ -2,15 +2,8 @@
 $__root = dirname(__DIR__);
 while (!is_file($__root . '/config.php')) { $__root = dirname($__root); }
 require_once $__root . '/config.php';
-?>
 
-<?php 
-
-session_start();
-
-if(!isset($_SESSION['nombre'])){
-    redirect('/views/login/index.php');
-};
+requireLogin();
 
 ?>
 <!DOCTYPE html>
@@ -35,6 +28,7 @@ if(!isset($_SESSION['nombre'])){
     </header>
 
     <form id="formulario_datos" action="<?php echo base_url('/controller/system-project/create project.php') ?>" method="POST">
+        <?php echo csrf_field(); ?>
         <div class="list-option">
             <article class="contenedor_entradas1">
                 <input type="hidden" name="Id" value="<?php $id_project= mt_rand(10000000, 99999999); echo "$id_project" ?>">

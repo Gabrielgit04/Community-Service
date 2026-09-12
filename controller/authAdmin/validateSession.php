@@ -1,6 +1,7 @@
 <?php
-session_start();
 require_once dirname(__DIR__, 2) . '/config.php';
+
+csrf_check();
 
 $questOne = isset($_POST['security-question']) ? htmlspecialchars($_POST['security-question']) : '';
 $questTwo = isset($_POST['security-question-2']) ? htmlspecialchars($_POST['security-question-2']) : '';
